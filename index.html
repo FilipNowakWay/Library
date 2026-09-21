@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Library</title>
+        <script src="./script.js" defer></script>
+    </head>
+    <body>
+        <h1>My Personal Library</h1>
+        <button class="open-form-btn">Add New Book</button>
+        <div class="container" class="hidden">
+            <form id="book-form">
+                <h2>Add a Book</h2>
+                <input type="text" id="title" placeholder="Title" required />
+                <input type="text" id="author" placeholder="Author" required />
+                <input type="number" id="pages" placeholder="Pages" required />
+                <label for="finished">Finished?</label>
+                <input type="checkbox" id="finished">
+                <button type="submit">Submit</button>
+                <button id="close-form-btn">Cancel</button>
+            </form>
+        </div>
+
+        <div class="library-display"></div>
+    </body>
+</html>

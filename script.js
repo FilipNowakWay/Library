@@ -16,29 +16,27 @@ function Book(title, author, pages, status, unique_id) {
 
 // Add books
 const myLibrary = [];
-
 function addBookToLibrary(title, author, pages, status, unique_id = crypto.randomUUID()) {
   // take params, create a book then store it in the array
   let new_book = new Book(title, author, pages, status, unique_id);
   myLibrary.push(new_book);
 }
 
-addBookToLibrary("Hello!", "Filip", 213, true);
-addBookToLibrary("Goodbye!", "Filip", 313, true);
-addBookToLibrary("Seeya!", "Filip", 413, false);
-
 // Display Books
-
 function display_myLibrary(myLibrary) {
   const container = document.querySelector(".container");
   container.innerHTML = "";
 
   myLibrary.forEach(book => {
     const card = document.createElement("div");
-    card.innerHTML = `<h3>${book.title}</h3><p>${book.author}</p><h4>${book.status}</h4>`;
+    card.innerHTML = `<h3>${book.title}</h3><p>Author: ${book.author}</p><p>Pages: ${book.pages}</p><h4>Status: ${book.status}</h4>`;
     card.classList.add("card");
     container.appendChild(card);
   });
 }
+
+addBookToLibrary("Hello!aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Filip", 213, true);
+addBookToLibrary("Goodbye!", "Filip", 313, true);
+addBookToLibrary("Seeya!", "Filip", 413, false);
 
 display_myLibrary(myLibrary);

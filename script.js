@@ -36,6 +36,7 @@ function display_myLibrary(myLibrary) {
   myLibrary.forEach(book => {
     const card = document.createElement("div");
     card.innerHTML = `<h3>${book.title}</h3><p>${book.author}</p><h4>${book.status}</h4>`;
+    card.classList.add("card");
     container.appendChild(card);
   });
 }

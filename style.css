@@ -1,0 +1,20 @@
+/*/* Add style to card and container * Add style to card and container */
+
+body{
+    height: 100vh;
+}
+
+.container{
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    height: 100%;
+}
+
+.card{
+    background-color: rgba(151, 177, 225, 0.25);
+    padding: 20px;
+    border-radius: 20px;
+    width: 150px;
+    text-align: center;
+}

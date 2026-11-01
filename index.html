@@ -5,14 +5,14 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>Document</title>
 	<link rel="stylesheet" href="./reset.css">
-	<link rel="stylesheet" href="./style.css?v=5">
+	<link rel="stylesheet" href="./style.css?v=12">
 	<script src="script.js" defer></script>
 </head>
 <body>
     <div class="menu">
-        <button class="addBookBtn">Add Book</button>
+        <button class="addBookBtn" id="add-book-toggle" type="button" aria-expanded="false" aria-controls="add-book-form">Add Book</button>
     </div>
-    <form class="book-form" id="add-book-form">
+    <form class="book-form hidden" id="add-book-form">
         <h2>Add a book</h2>
         <div class="form-field">
             <label for="title">Title</label>
@@ -30,7 +30,7 @@
             <input type="checkbox" id="status" name="status">
             Finished
         </label>
-        <button type="submit" class="addBookBtn">Add Book</button>
+        <button type="submit" class="addBookBtn" id="submitBtn">Add Book</button>
     </form>
     <div class="container"></div>
 </body>

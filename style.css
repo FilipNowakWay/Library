@@ -1,86 +1,318 @@
-/*/* Add style to card and container * Add style to card and container */
+/* ==========================================================================
+   Library
+   --------------------------------------------------------------------------
+   Sections
+     1. Design tokens
+     2. Base
+     3. Layout
+     4. Book cards
+     5. Buttons
+        5.1 Primary (Add Book)
+        5.2 Status toggle
+        5.3 Remove button
+     6. Add-book form
+     7. Motion preferences
+   ========================================================================== */
 
-body{
-    height: 100vh;
+/* 1. Design tokens
+   ========================================================================== */
+
+:root {
+    --color-text: #2f4f4f;
+    --color-primary: darkslategray;
+    --color-primary-hover: #3f4f4f;
+    --color-surface: rgba(151, 177, 225, 0.25);
+    --color-border: #b8c4d6;
+    --color-finished: #1f7a4d;
+    --color-unfinished: #a3600f;
+    --color-danger: #8a3b3b;
+
+    --radius-sm: 0.5rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.5rem;
+    --radius-pill: 999px;
+
+    --shadow-card: 0 8px 12px -1px rgba(0, 0, 0, 0.2);
+    --shadow-button: 0 8px 12px -1px rgba(0, 0, 0, 0.3);
+
+    --transition-fast: 120ms ease;
+    --transition-base: 180ms ease;
+    --transition-fade: 200ms ease;
+    --transition-panel: 300ms ease;
 }
 
-.container{
-    display: flex;
-    justify-content: space-evenly;
+/* 2. Base
+   ========================================================================== */
+
+body {
+    /* Extra scroll room for the collapsible form */
+    height: 200vh;
 }
 
-.card{
+/* 3. Layout
+   ========================================================================== */
+
+.container {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
-    align-content: center;
-    gap: 0.25rem;
-    overflow-wrap: anywhere;
-    background-color: rgba(151, 177, 225, 0.25);
-    box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.2);
-    padding: 1.5rem;
-    border-radius: 1.5rem;
-    width: 12rem;
-    text-align: center;
+    grid-template-columns: repeat(auto-fit, 12rem);
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 0 1rem 3rem;
 }
 
-.menu{
+.menu {
     display: flex;
     justify-content: center;
 }
 
-.addBookBtn{
-    margin: 4rem 0;
-    padding: 0.75rem 1.5rem;
-    border-radius: 1rem;
-    color: white;
-    background-color: darkslategray;
-    box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.3);
-    border: none;
-    user-select: none;
+/* 4. Book cards
+   ========================================================================== */
+
+.card {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    align-content: space-evenly;
+    gap: 0.25rem;
+    padding: 1.5rem;
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    text-align: center;
+    overflow-wrap: anywhere;
 }
 
-.addBookBtn:hover{
-    background-color: #3f4f4f;
+/* 5. Buttons
+   ========================================================================== */
+
+.statusBtn,
+.removeBookBtn,
+.addBookBtn {
     cursor: pointer;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.book-form{
+/* 5.1 Primary (Add Book)
+   -------------------------------------------------------------------------- */
+
+.addBookBtn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: var(--radius-md);
+    background-color: var(--color-primary);
+    color: white;
+    box-shadow: var(--shadow-button);
+    transition: background-color var(--transition-base);
+}
+
+.addBookBtn:hover {
+    background-color: var(--color-primary-hover);
+}
+
+.addBookBtn:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+.menu .addBookBtn {
+    margin: 4rem 0;
+}
+
+.book-form .addBookBtn {
+    margin: 0.5rem 0 0;
+}
+
+/* 5.2 Status toggle
+   -------------------------------------------------------------------------- */
+
+/* .finished / .not-finished are applied by script.js */
+.statusBtn {
+    --status-color: var(--color-text);
+    --status-bg: color-mix(in srgb, var(--status-color) 8%, transparent);
+    --status-border: color-mix(in srgb, var(--status-color) 28%, transparent);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.45rem;
+    width: 100%;
+    margin-top: 0.75rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--status-border);
+    border-radius: var(--radius-pill);
+    background-color: var(--status-bg);
+    color: var(--status-color);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    transition:
+        background-color var(--transition-base),
+        border-color var(--transition-base),
+        color var(--transition-base),
+        box-shadow var(--transition-base),
+        transform var(--transition-fast);
+}
+
+.statusBtn::before {
+    content: "";
+    flex-shrink: 0;
+    width: 0.5rem;
+    height: 0.5rem;
+    border-radius: 50%;
+    background-color: currentColor;
+    box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 18%, transparent);
+    transition: box-shadow var(--transition-base);
+}
+
+.statusBtn.finished {
+    --status-color: var(--color-finished);
+    --status-bg: color-mix(in srgb, var(--status-color) 10%, transparent);
+    --status-border: color-mix(in srgb, var(--status-color) 30%, transparent);
+}
+
+.statusBtn.not-finished {
+    --status-color: var(--color-unfinished);
+    --status-bg: color-mix(in srgb, var(--status-color) 14%, transparent);
+    --status-border: color-mix(in srgb, var(--status-color) 40%, transparent);
+}
+
+.statusBtn:hover {
+    border-color: var(--status-color);
+    background-color: var(--status-color);
+    color: white;
+    box-shadow: 0 6px 14px -6px var(--status-color);
+    transform: translateY(-1px);
+}
+
+.statusBtn:hover::before {
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.28);
+}
+
+.statusBtn:active {
+    box-shadow: 0 2px 6px -4px var(--status-color);
+    transform: translateY(0) scale(0.97);
+}
+
+.statusBtn:focus-visible {
+    outline: 2px solid var(--status-color);
+    outline-offset: 2px;
+}
+
+/* 5.3 Remove button
+   -------------------------------------------------------------------------- */
+
+.removeBookBtn {
+    justify-self: center;
+    margin-top: 0.15rem;
+    padding: 0.25rem 0.75rem;
+    border: none;
+    border-radius: var(--radius-pill);
+    background-color: transparent;
+    color: var(--color-danger);
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    line-height: 1.2;
+    transition:
+        background-color var(--transition-base),
+        color var(--transition-base),
+        transform var(--transition-fast);
+}
+
+.removeBookBtn:hover {
+    background-color: color-mix(in srgb, var(--color-danger) 10%, transparent);
+}
+
+.removeBookBtn:active {
+    transform: scale(0.97);
+}
+
+.removeBookBtn:focus-visible {
+    outline: 2px solid var(--color-danger);
+    outline-offset: 2px;
+}
+
+/* 6. Add-book form
+   ========================================================================== */
+
+.book-form {
     display: grid;
     gap: 0.75rem;
     width: min(20rem, calc(100% - 2rem));
+    max-height: 32rem;
     margin: 0 auto 2rem;
     padding: 1.5rem;
-    border-radius: 1.5rem;
-    background-color: rgba(151, 177, 225, 0.25);
-    box-shadow: 0 8px 12px -1px rgba(0, 0, 0, 0.2);
+    border-radius: var(--radius-lg);
+    background-color: var(--color-surface);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+    opacity: 1;
+    transition:
+        max-height var(--transition-panel),
+        opacity var(--transition-fade),
+        transform var(--transition-panel),
+        margin-bottom var(--transition-panel),
+        padding var(--transition-panel);
 }
 
-.book-form h2{
+.book-form h2 {
     text-align: center;
 }
 
-.form-field{
+.form-field {
     display: grid;
     gap: 0.25rem;
 }
 
-.form-field label{
+.form-field label {
     font-weight: 600;
 }
 
-.form-field input{
+.form-field input {
     padding: 0.5rem;
-    border: 1px solid #b8c4d6;
-    border-radius: 0.5rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-sm);
 }
 
-.checkbox-field{
+.checkbox-field {
     display: flex;
     align-items: center;
     gap: 0.5rem;
     font-weight: 600;
 }
 
-.book-form .addBookBtn{
-    margin: 0.5rem 0 0;
+.book-form.hidden {
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    visibility: hidden;
+    pointer-events: none;
+    transition:
+        max-height var(--transition-panel),
+        opacity var(--transition-fade),
+        transform var(--transition-panel),
+        margin-bottom var(--transition-panel),
+        padding var(--transition-panel),
+        visibility 0s 300ms;
+}
+
+/* 7. Motion preferences
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+    .book-form,
+    .statusBtn,
+    .removeBookBtn {
+        transition: none;
+    }
+
+    .statusBtn:hover,
+    .statusBtn:active,
+    .removeBookBtn:active {
+        transform: none;
+    }
 }

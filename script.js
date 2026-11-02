@@ -108,6 +108,9 @@ container.addEventListener("click", (event) => {
 });
 
 // Initial books
-addBookToLibrary("Hello!aaaaaaaaaaaaaaaaaaaaaaaaaaaaa", "Filip", 213, true);
-addBookToLibrary("Goodbye!", "Filip", 313, true);
-addBookToLibrary("Seeya!", "Filip", 413, false);
+addBookToLibrary("Deep Work", "Cal Newport", 304, true);
+addBookToLibrary("Atomic Habits", "James Clear", 320, true);
+addBookToLibrary("The 7 Habits of Highly Effective People", "Stephen R. Covey", 432, false);
+addBookToLibrary("Mindset: The New Psychology of Success", "Carol S. Dweck", 320, true);
+addBookToLibrary("How to Win Friends and Influence People", "Dale Carnegie", 288, false);
+addBookToLibrary("The Power of Habit", "Charles Duhigg", 416, false);

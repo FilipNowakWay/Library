@@ -11,6 +11,10 @@ function Book(title, author, pages, status, id = crypto.randomUUID()) {
     this.id = id;
 }
 
+Book.prototype.toggleStatus = function () {
+  this.status = this.status === "Finished" ? "Not Finished" : "Finished";
+};
+
 // Library
 const myLibrary = [];
 
@@ -18,6 +22,7 @@ const myLibrary = [];
 const container = document.querySelector(".container");
 const addBookBtn = document.querySelector("#add-book-toggle");
 const form = document.querySelector("#add-book-form");
+
 
 // Display books
 function renderLibrary() {
@@ -32,7 +37,7 @@ function renderLibrary() {
             <h3>${book.title}</h3>
             <p>Author: ${book.author}</p>
             <p>Pages: ${book.pages}</p>
-            <button class="statusBtn ${statusClass}">${book.status}</button>
+            <button class="statusBtn ${statusClass}" data-id="${book.id}">${book.status}</button>
             <button class="removeBookBtn" data-id="${book.id}">Remove Book</button>
         `;
 
@@ -54,6 +59,17 @@ function removeBook(id) {
 
     myLibrary.splice(index, 1);
     renderLibrary();
+}
+
+// Change book status
+function changeStatus(id) {
+  const index = myLibrary.findIndex((book) => book.id === id);
+
+  if (index === -1) return;
+
+  myLibrary[index].toggleStatus();
+
+  renderLibrary();
 }
 
 // Add-book form
@@ -79,11 +95,16 @@ form.addEventListener("submit", (event) => {
 
 // Book cards (event delegation)
 container.addEventListener("click", (event) => {
-    const removeButton = event.target.closest(".removeBookBtn");
-
-    if (!removeButton) return;
-
+  const removeButton = event.target.closest(".removeBookBtn");
+  if (removeButton) {
     removeBook(removeButton.dataset.id);
+    return;
+  }
+
+  const statusBtn = event.target.closest(".statusBtn");
+  if (statusBtn) {
+    changeStatus(statusBtn.dataset.id);
+  }
 });
 
 // Initial books

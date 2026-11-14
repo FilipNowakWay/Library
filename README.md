@@ -1,5 +1,7 @@
 # Library
 
+[Github pages link](https://filipnowakway.github.io/Library/)
+
 A small, responsive book library built with plain HTML, CSS, and JavaScript.
 
 ![Screenshot of the Library app](./screenshot.png)

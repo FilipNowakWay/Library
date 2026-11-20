@@ -81,6 +81,15 @@ addBookBtn.addEventListener("click", () => {
 form.addEventListener("submit", (event) => {
     event.preventDefault();
 
+    requiredFields.forEach(validateField);
+
+    if (!form.checkValidity()) {
+        const firstInvalid = form.querySelector(":invalid");
+        errorMsg.textContent = firstInvalid.validationMessage;
+        firstInvalid.focus();
+        return;
+    }
+
     const data = new FormData(form);
 
     addBookToLibrary(
@@ -91,6 +100,7 @@ form.addEventListener("submit", (event) => {
     );
 
     form.reset();
+    errorMsg.textContent = "";
 });
 
 // Book cards (event delegation)
@@ -106,6 +116,31 @@ container.addEventListener("click", (event) => {
     changeStatus(statusBtn.dataset.id);
   }
 });
+
+// Form Validation
+
+const titleInput = document.getElementById("title");
+const authorInput = document.getElementById("author");
+const pagesInput = document.getElementById("pages");
+const errorMsg = document.getElementById("errorMsg");
+
+const requiredFields = [
+  { input: titleInput, message: "Title can't be empty." },
+  { input: authorInput, message: "Author can't be empty." },
+  { input: pagesInput, message: "Pages can't be empty." },
+];
+
+function validateField({ input, message }) {
+  input.setCustomValidity(input.validity.valueMissing ? message : "");
+}
+
+requiredFields.forEach((field) => {
+  field.input.addEventListener("input", () => {
+    validateField(field);
+    errorMsg.textContent = "";
+  });
+});
+
 
 // Initial books
 addBookToLibrary("Deep Work", "Cal Newport", 304, true);
